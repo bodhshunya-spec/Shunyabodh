@@ -11,19 +11,19 @@ type BrandMarkProps = {
 
 const sizeStyles = {
   sm: {
-    english: "text-base tracking-[0.12em]",
-    nepali: "text-[0.7rem] tracking-[0.18em]",
-    gap: "gap-2.5",
+    english: "text-sm tracking-[0.1em] sm:text-base",
+    nepali: "text-sm tracking-[0.08em]",
+    gap: "gap-2",
   },
   md: {
-    english: "text-lg tracking-[0.14em] sm:text-xl",
-    nepali: "text-[0.75rem] tracking-[0.2em]",
-    gap: "gap-3",
+    english: "text-base tracking-[0.12em] sm:text-lg",
+    nepali: "text-base tracking-[0.08em]",
+    gap: "gap-2.5",
   },
   lg: {
-    english: "text-2xl tracking-[0.16em] sm:text-3xl",
-    nepali: "text-sm tracking-[0.22em]",
-    gap: "gap-3.5",
+    english: "text-xl tracking-[0.14em] sm:text-2xl",
+    nepali: "text-xl tracking-[0.08em] sm:text-2xl",
+    gap: "gap-3",
   },
 };
 
@@ -34,12 +34,12 @@ export function BrandMark({
   size = "md",
 }: BrandMarkProps) {
   const styles = sizeStyles[size];
-  const resolvedIconSize = iconSize ?? (size === "lg" ? 52 : size === "sm" ? 36 : 44);
+  const resolvedIconSize = iconSize ?? (size === "lg" ? 48 : size === "sm" ? 32 : 40);
 
   return (
     <div className={cn("flex items-center", styles.gap, className)}>
       {showIcon && <ShunyaBodhaLogo size={resolvedIconSize} />}
-      <div className="flex flex-col leading-tight">
+      <div className="flex min-w-0 items-baseline gap-2 whitespace-nowrap leading-none">
         <span
           className={cn(
             "font-heading font-medium uppercase text-foreground",
@@ -48,9 +48,12 @@ export function BrandMark({
         >
           {ne.site.nameEn}
         </span>
+        <span className="text-gold-muted" aria-hidden>
+          ·
+        </span>
         <span
           className={cn(
-            "font-nepali mt-0.5 font-normal text-gold",
+            "font-nepali font-normal text-gold",
             styles.nepali
           )}
         >

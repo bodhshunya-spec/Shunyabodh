@@ -24,7 +24,7 @@ export function Header({ userEmail }: HeaderProps) {
           href="/"
           className="min-w-0 shrink transition-opacity hover:opacity-85"
         >
-          <BrandMark size="md" />
+          <BrandMark size="sm" />
         </Link>
 
         <nav className="hidden items-center gap-0.5 md:flex">
