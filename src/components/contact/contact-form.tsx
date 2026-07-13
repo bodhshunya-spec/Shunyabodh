@@ -8,7 +8,17 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { ne } from "@/lib/i18n/ne";
 
-export function ContactForm() {
+type ContactFormProps = {
+  source?: "contact" | "consultation";
+  submitLabel?: string;
+  messagePlaceholder?: string;
+};
+
+export function ContactForm({
+  source = "contact",
+  submitLabel,
+  messagePlaceholder,
+}: ContactFormProps) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -26,6 +36,7 @@ export function ContactForm() {
     formData.set("name", name);
     formData.set("email", email);
     formData.set("message", message);
+    formData.set("source", source);
 
     const result = await submitContactMessage(formData);
 
@@ -46,11 +57,15 @@ export function ContactForm() {
     return (
       <div className="rounded-xl border border-border/70 bg-muted/80 px-6 py-10 text-center">
         <p className="font-heading text-lg leading-relaxed text-foreground/90">
-          {ne.contact.success}
+          {source === "consultation"
+            ? ne.consultation.success
+            : ne.contact.success}
         </p>
       </div>
     );
   }
+
+  const idPrefix = source === "consultation" ? "consultation" : "contact";
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
@@ -61,9 +76,9 @@ export function ContactForm() {
       )}
 
       <div className="space-y-2">
-        <Label htmlFor="contact-name">{ne.contact.name}</Label>
+        <Label htmlFor={`${idPrefix}-name`}>{ne.contact.name}</Label>
         <Input
-          id="contact-name"
+          id={`${idPrefix}-name`}
           name="name"
           type="text"
           value={name}
@@ -74,9 +89,9 @@ export function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="contact-email">{ne.contact.email}</Label>
+        <Label htmlFor={`${idPrefix}-email`}>{ne.contact.email}</Label>
         <Input
-          id="contact-email"
+          id={`${idPrefix}-email`}
           name="email"
           type="email"
           value={email}
@@ -87,20 +102,22 @@ export function ContactForm() {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="contact-message">{ne.contact.message}</Label>
+        <Label htmlFor={`${idPrefix}-message`}>{ne.contact.message}</Label>
         <Textarea
-          id="contact-message"
+          id={`${idPrefix}-message`}
           name="message"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
-          placeholder={ne.contact.messagePlaceholder}
+          placeholder={messagePlaceholder ?? ne.contact.messagePlaceholder}
           rows={6}
           required
         />
       </div>
 
       <Button type="submit" className="w-full" disabled={isPending}>
-        {isPending ? ne.contact.submitting : ne.contact.submit}
+        {isPending
+          ? ne.contact.submitting
+          : (submitLabel ?? ne.contact.submit)}
       </Button>
     </form>
   );

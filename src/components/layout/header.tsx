@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { signOut } from "@/app/actions/auth";
 import { BrandMark } from "@/components/brand/brand-mark";
+import { MobileNav } from "@/components/layout/mobile-nav";
 import { Button } from "@/components/ui/button";
 import { ne } from "@/lib/i18n/ne";
 
@@ -17,11 +18,11 @@ const feedLinks = [
 
 export function Header({ userEmail }: HeaderProps) {
   return (
-    <header className="premium-header">
-      <div className="mx-auto flex h-[4.75rem] max-w-5xl items-center justify-between gap-6 px-6">
+    <header className="premium-header relative z-40">
+      <div className="mx-auto flex h-[4.75rem] max-w-5xl items-center justify-between gap-4 px-6">
         <Link
           href="/"
-          className="shrink-0 transition-opacity hover:opacity-85"
+          className="min-w-0 shrink transition-opacity hover:opacity-85"
         >
           <BrandMark size="md" />
         </Link>
@@ -40,7 +41,7 @@ export function Header({ userEmail }: HeaderProps) {
           </Button>
         </nav>
 
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="hidden items-center gap-2 sm:gap-3 md:flex">
           {userEmail ? (
             <>
               <span className="hidden text-sm text-muted-foreground lg:inline">
@@ -66,6 +67,8 @@ export function Header({ userEmail }: HeaderProps) {
             </>
           )}
         </div>
+
+        <MobileNav userEmail={userEmail} />
       </div>
     </header>
   );

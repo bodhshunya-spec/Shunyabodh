@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ShunyaBodhaLogo } from "@/components/brand/shunya-bodha-logo";
+import { ContactForm } from "@/components/contact/contact-form";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -42,11 +43,11 @@ export default function ConsultationPage() {
           <p className="text-sm leading-relaxed text-muted-foreground">
             {ne.consultation.cardNote}
           </p>
-          <Button asChild>
-            <a href="mailto:hello@shunya.org?subject=परामर्श%20अनुरोध">
-              {ne.consultation.sendMessage}
-            </a>
-          </Button>
+          <ContactForm
+            source="consultation"
+            submitLabel={ne.consultation.sendMessage}
+            messagePlaceholder={ne.consultation.messagePlaceholder}
+          />
         </CardContent>
       </Card>
 
